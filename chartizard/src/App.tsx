@@ -28,18 +28,18 @@
 //   );
 // }
 
-// import { MantineProvider, Text } from "@mantine/core";
-// import {
-//   AppShell,
-//   Navbar,
-//   Header,
-//   useMantineTheme,
-//   MediaQuery,
-//   Burger,
-// } from "@mantine/core";
-// import { MainLinks } from "./components/Appshell/_main_links";
-// import { User } from "./components/Appshell/_user";
 import AppShell from "./components/Appshell/AppShell";
+
+import { MantineProvider } from "@mantine/core";
+import { SpotlightProvider } from "@mantine/spotlight";
+import type { SpotlightAction } from "@mantine/spotlight";
+import {
+  IconHome,
+  IconDashboard,
+  IconFileText,
+  IconSearch,
+} from "@tabler/icons-react";
+
 interface DashboardProps {
   name: string;
   icon: string;
@@ -51,11 +51,42 @@ const dashboards: DashboardProps[] = [
   },
 ];
 
+const actions: SpotlightAction[] = [
+  {
+    title: "Home",
+    description: "Get to home page",
+    onTrigger: () => console.log("Home"),
+    icon: <IconHome size="1.2rem" />,
+  },
+  {
+    title: "Dashboard",
+    description: "Get full information about current system status",
+    onTrigger: () => console.log("Dashboard"),
+    icon: <IconDashboard size="1.2rem" />,
+  },
+  {
+    title: "Documentation",
+    description: "Visit documentation to lean more about all features",
+    onTrigger: () => console.log("Documentation"),
+    icon: <IconFileText size="1.2rem" />,
+  },
+];
+
 function App() {
   return (
-    <AppShell>
-      <p>hi there</p>
-    </AppShell>
+    <MantineProvider>
+      <SpotlightProvider
+        actions={actions}
+        searchIcon={<IconSearch size="1.2rem" />}
+        searchPlaceholder="Search..."
+        shortcut={["mod + P", "mod + K", "/"]}
+        nothingFoundMessage="Nothing found..."
+      >
+        <AppShell>
+          <p>hi there</p>
+        </AppShell>
+      </SpotlightProvider>
+    </MantineProvider>
   );
 }
 
